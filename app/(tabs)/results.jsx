@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import { TabBarIcon } from '../../components/icons';
 import { createThemedStyles, HEALTH_CONFIG } from "../../constants/styles";
 import { ThemeProvider, useTheme } from "../../context/ThemeContext";
 import { useRecords } from "../../lib/useRecords";
@@ -36,7 +37,7 @@ export default function ResultsScreen() {
     <ThemeProvider>
       <View style={styles.screenContainerPadded}>
         {/* 🔄 Manual Refresh Button */}
-        <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
+        <View style={styles.refreshButton}>
           <TouchableOpacity
             style={[
               styles.button,
@@ -44,7 +45,7 @@ export default function ResultsScreen() {
             ]}
             onPress={refresh}
           >
-            <Text style={styles.buttonText}>Refresh</Text>
+            <TabBarIcon name="refresh" color={styles.color} />
           </TouchableOpacity>
         </View>
 

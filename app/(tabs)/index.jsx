@@ -27,6 +27,8 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.screenContainerPadded}>
+      <Text style={[styles.placeholderText, { margin: 10, fontSize: 24, fontWeight: "bold", textAlign: "center" }]}>Detect. Classify. Cultivate Better.</Text>
+      <Text style={[styles.statusText, { marginBottom: 20, fontSize: 15, fontWeight: "300", textAlign: "center" }]}>Click the Button below to start classifying</Text>
       <StatusBar style={isDarkMode ? "light" : "dark"} />
       <View style={styles.card}>
         <TouchableOpacity style={styles.button} onPress={handleStartBatch} disabled={isClassifying}>

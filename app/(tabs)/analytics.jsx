@@ -47,7 +47,7 @@ export default function AnalyticsScreen() {
 
   return (
     <ThemeProvider>
-      <ScrollView style={[styles.screenContainer, { padding: 20 }]}>
+      <ScrollView style={[styles.screenContainer, { padding: 28 }]}>
         <Text
           style={[
             styles.resultBannerText,
@@ -59,8 +59,8 @@ export default function AnalyticsScreen() {
 
         <BarChart
           data={chartData}
-          width={Dimensions.get("window").width - 40}
-          height={250}
+          width={Dimensions.get("window").width - 55}
+          height={300}
           yAxisLabel=""
           fromZero={true}
           withCustomBarColorFromData={true}
@@ -78,12 +78,11 @@ export default function AnalyticsScreen() {
           }}
           style={{
             borderRadius: 10,
-            marginVertical: 10
-
+            alignItems: "center",
           }}
         />
 
-        <View style={styles.card}>
+        <View style={[styles.smallCard, { marginTop: 20 }]}>
           <Text
             style={[
               styles.statusText,

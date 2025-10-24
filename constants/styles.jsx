@@ -107,6 +107,11 @@ export const createThemedStyles = (isDarkMode) => {
       fontSize: 20,
       fontWeight: "900",
     },
+    refreshButton: {
+      alignItems: "flex-end",
+      marginTop: 10,
+      marginBottom: 10,
+    },
     button: {
       backgroundColor: "#F39C12",
       paddingVertical: 16,
