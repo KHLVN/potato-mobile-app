@@ -1,27 +1,52 @@
 // app/(tabs)/settings.jsx
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Switch } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  ActivityIndicator,
+} from "react-native";
 import { createThemedStyles, HEALTH_CONFIG } from "../../constants/styles";
 import { useTheme } from "../../context/ThemeContext";
-import { API_BASE, fetchRecords } from "../../lib/api";
+import { detectAPI, fetchRecords } from "../../lib/api"; // 👈 import updated functions
 
 export default function SettingsScreen() {
   const [isConnected, setIsConnected] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
+  const [piIp, setPiIp] = useState(null);
+  const [lastChecked, setLastChecked] = useState(null);
   const { isDarkMode, setIsDarkMode } = useTheme();
   const styles = createThemedStyles(isDarkMode);
 
+  // === Handle check connection ===
   const handleCheckConnection = async () => {
     setIsScanning(true);
     try {
-      const res = await fetch(`${API_BASE}/`);
-      setIsConnected(res.ok);
-    } catch {
+      // 👇 Step 1: Auto-detect Pi’s current IP dynamically
+      await detectAPI();
+
+      // 👇 Step 2: Actually test connection
+      const data = await fetchRecords();
+      if (Array.isArray(data)) {
+        setIsConnected(true);
+        setPiIp("Detected via Flask /ip");
+      } else {
+        setIsConnected(false);
+      }
+    } catch (err) {
+      console.warn("Connection error:", err);
       setIsConnected(false);
     } finally {
+      setLastChecked(new Date());
       setIsScanning(false);
     }
   };
+
+  // Run once on mount
+  useEffect(() => {
+    handleCheckConnection();
+  }, []);
 
   return (
     <View style={styles.screenContainerPadded}>
@@ -40,37 +65,44 @@ export default function SettingsScreen() {
             ]}
           />
           <Text style={styles.statusText}>
-            {isConnected ? "Connected to Raspberry Pi" : "Pi unreachable"}
+            {isConnected
+              ? "Connected to Raspberry Pi"
+              : "Pi unreachable"}
           </Text>
         </View>
 
-        {isConnected ? (
-          <TouchableOpacity
-            style={[
-              styles.button,
-              { backgroundColor: HEALTH_CONFIG.Bacterial.color },
-            ]}
-            onPress={() => setIsConnected(false)}
-          >
+        <TouchableOpacity
+          style={[
+            styles.button,
+            isConnected
+              ? { backgroundColor: HEALTH_CONFIG.Bacterial.color }
+              : {},
+          ]}
+          onPress={
+            isConnected
+              ? () => setIsConnected(false)
+              : handleCheckConnection
+          }
+          disabled={isScanning}
+        >
+          {isScanning ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
             <Text
               style={[
                 styles.buttonText,
-                { color: HEALTH_CONFIG.Bacterial.textColor },
+                isConnected && { color: HEALTH_CONFIG.Bacterial.textColor },
               ]}
             >
-              DISCONNECT
+              {isConnected ? "DISCONNECT" : "CHECK CONNECTION"}
             </Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleCheckConnection}
-            disabled={isScanning}
-          >
-            <Text style={styles.buttonText}>
-              {isScanning ? "CHECKING..." : "CHECK CONNECTION"}
-            </Text>
-          </TouchableOpacity>
+          )}
+        </TouchableOpacity>
+
+        {lastChecked && (
+          <Text style={[styles.statusText, { marginTop: 8, fontSize: 13 }]}>
+            Last checked: {lastChecked.toLocaleTimeString()}
+          </Text>
         )}
       </View>
 
