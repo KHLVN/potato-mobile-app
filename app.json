@@ -1,19 +1,17 @@
 {
   "expo": {
-    "name": "PD-mobile",
-    "slug": "PD-mobile",
+    "name": "PotatoCare",
+    "slug": "PotatoCare",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -22,24 +20,27 @@
         }
       }
     },
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "usesCleartextTraffic": true
+      "usesCleartextTraffic": true,
+      "package": "com.khlvn.PotatoCare"
     },
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "plugins": [
       "expo-router"
     ],
-
-    "scheme": "pdmobile"
+    "scheme": "pdmobile",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d452fd7c-23b0-437f-accd-b9f761ec1ce0"
+      }
+    }
   }
 }
