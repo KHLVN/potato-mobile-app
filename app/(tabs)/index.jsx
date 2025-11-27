@@ -93,7 +93,6 @@ export default function HomeScreen() {
       </Text>
 
       <StatusBar style={isDarkMode ? "light" : "dark"} />
-<<<<<<< HEAD
 
       {/* === Capture & Classify Button === */}
       <View style={styles.card}>
@@ -108,15 +107,6 @@ export default function HomeScreen() {
             <Text style={styles.buttonText}>📸 Capture & Classify</Text>
           )}
         </TouchableOpacity>
-=======
-      <TouchableOpacity style={styles.button} onPress={handleStartBatch} disabled={isClassifying}>
-        <Text style={styles.buttonText}>
-          {isClassifying ? "CHECKING..." : "START NEW BATCH"}
-        </Text>
-      </TouchableOpacity>
-      <View style={[styles.card, { marginLeft: 0, marginRight: 0}]}>
-        <Text>INFO</Text>
->>>>>>> 9d10b8b (updated UI)
       </View>
 
       {/* === Latest Result === */}
