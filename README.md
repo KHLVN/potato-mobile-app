@@ -1,0 +1,2 @@
+# Potato Care: Deep Learning-Based Potato Health Classification
+This project involves a mobile application that controls an automated potato segregation prototype using deep learning–based health classification. The app captures potato images, processes them through a trained neural network model (VGG-16), and determines the health status of each potato (Healthy, Bacterial-Infected, Fungal-Infected). Based on the classification result, the automated system automatically segregates potatoes, enabling efficient, accurate, and user-controlled quality sorting.
